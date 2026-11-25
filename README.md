@@ -8,11 +8,6 @@
 - 參數：`tag`（小標）、`d`（貼紙）、`m1`／`m2`（主標兩行）、`ic`（表情符號圖示）、`pl`（1／0，飛機航線）。例如：`?tag=從東京回來&m1=台北&m2=順順投&ic=🇯🇵`
 - 英文預設可加 `#en`。進入全螢幕後，所有控制項會隱藏。
 
-## 部署（GitHub Pages）
-1. 建立公開 repository，上傳 `index.html` 與 `.nojekyll`。
-2. Settings → Pages → Source 選 `main` 分支、根目錄 `/`。
-3. 數分鐘後即可用 `https://<帳號>.github.io/<repo>/` 開啟。
-
 ## 注意
 - 字體（Noto Sans TC、Anton）從 Google Fonts 載入，首次開啟請連網。
 - 使用者自訂的文字由各自連結決定，與本站內容無關。
