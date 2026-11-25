@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>台北換你翻</title>
+<meta name="description" content="台北換你翻：可自訂標語的街頭展示頁（個人支持用，非官方）"><meta property="og:title" content="台北換你翻"><meta property="og:description" content="可自訂標語的街頭展示頁（個人支持用，非官方）"><meta property="og:type" content="website">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@900&family=Anton&display=swap">
+<style>
+:root{--ink:#0a2748;--org:#e85200;--sun:#ffd23f;--fs:min(27vw,25vmin);color-scheme:dark}
+[data-lang=en]{--fs:min(23vw,27vmin)}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#1b78dc;overflow:hidden;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+body{position:fixed;inset:0;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;font-weight:900}
+[data-lang=en] body,body[data-lang=en]{font-family:Anton,Impact,"Arial Narrow",sans-serif;font-weight:400}
+.zh,.en{display:none}
+body[data-lang=zh] .zh{display:inline-flex}body[data-lang=en] .en{display:inline-flex}
+body[data-lang=zh] div.zh,body[data-lang=en] div.en{display:flex}
+body[data-lang=zh] .en,body[data-lang=en] .zh{display:none!important}
+#sky{position:absolute;inset:0;background:linear-gradient(180deg,#1b78dc 0%,#58aef5 45%,#b9e1ff 75%,#e6f4ff 100%)}
+#sky svg{position:absolute;inset:0;width:100%;height:100%}
+.cloud{animation:cl 6s ease-in-out infinite alternate}
+@keyframes cl{to{transform:translateX(60px)}}
+.plane{position:absolute;top:4%;left:0;width:min(15vmin,24vw);z-index:4;pointer-events:none}.plane svg{opacity:.72}.plane.free{animation:fly 3.2s linear infinite}
+@keyframes fly{from{left:-15%;transform:rotate(-3deg)}to{left:105%;transform:rotate(-3deg)}}
+
+.main{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--fs)*.26);padding:calc(var(--fs)*.12) 3vw calc(var(--fs)*.2);z-index:3}
+.bc{position:relative;display:flex;align-items:center;gap:calc(var(--fs)*.1);background:var(--sun);color:var(--ink);font-size:calc(var(--fs)*.32);line-height:1;padding:calc(var(--fs)*.07) calc(var(--fs)*.2);box-shadow:0 calc(var(--fs)*.04) 0 rgba(0,0,0,.3);transform:rotate(-1.5deg);white-space:nowrap;align-self:center}
+.bc .bcs{height:calc(var(--fs)*.3);width:auto;border:calc(var(--fs)*.02) solid var(--ink);flex:none}
+.bc .dt{background:var(--ink);color:#fff;padding:calc(var(--fs)*.03) calc(var(--fs)*.12);margin-left:calc(var(--fs)*.04);transform:rotate(3deg);font-family:Anton,Impact,sans-serif;font-weight:400;letter-spacing:.03em;font-size:.95em}
+.panel{position:relative;background:var(--org);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(var(--fs)*.12) calc(var(--fs)*.22) calc(var(--fs)*.18);box-shadow:0 calc(var(--fs)*.05) 0 rgba(0,0,0,.3);max-width:96vw}
+.l1,.l2{display:flex;align-items:center;gap:calc(var(--fs)*.05);font-size:var(--fs);line-height:1.02;white-space:nowrap;-webkit-text-stroke:calc(var(--fs)*.035) var(--ink);paint-order:stroke fill}
+.vt{position:relative;width:calc(var(--fs)*.95);height:calc(var(--fs)*.95);flex:none;background:#fff;border-radius:50%;box-shadow:0 calc(var(--fs)*.04) 0 rgba(0,0,0,.3);-webkit-text-stroke:0;margin-left:calc(var(--fs)*.04);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.vt svg{position:absolute;inset:0;width:100%;height:100%}
+.vt circle{fill:none;stroke:var(--org);stroke-width:6;stroke-linecap:round;stroke-dasharray:290;transform-origin:50% 50%;transform:rotate(-90deg);animation:ring 2.4s ease-in-out infinite}
+@keyframes ring{0%{stroke-dashoffset:290}45%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:-290}}
+.num3{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:calc(var(--fs)*.72);line-height:1;color:var(--ink);-webkit-text-stroke:0}
+.date{position:absolute;top:calc(var(--fs)*-.2);left:calc(var(--fs)*.06);background:var(--ink);color:#fff;font-family:Anton,Impact,sans-serif;font-weight:400;letter-spacing:.04em;font-size:calc(var(--fs)*.3);padding:calc(var(--fs)*.02) calc(var(--fs)*.1);transform:rotate(-3deg);line-height:1.2;-webkit-text-stroke:0;z-index:5;box-shadow:0 calc(var(--fs)*.03) 0 rgba(0,0,0,.3)}
+.zh .l1,.zh.l1,.zh.l2{letter-spacing:.02em}
+.ctl{position:fixed;left:2vmin;bottom:2vmin;z-index:10;display:flex;gap:1.2vmin}
+.ctl button{font:700 max(14px,3.4vmin)/1 -apple-system,Arial,"PingFang TC",sans-serif;color:#fff;background:rgba(10,39,72,.85);border:2px solid rgba(255,255,255,.6);border-radius:3vmin;padding:1.4vmin 2.4vmin;cursor:pointer}
+.ctl button.on{background:#fff;color:var(--ink)}
+#fs{position:fixed;right:2vmin;bottom:2vmin;z-index:10;font:700 5vmin/1 Arial,sans-serif;font-size:max(20px,5vmin);color:#fff;background:rgba(10,39,72,.85);border:2px solid rgba(255,255,255,.6);border-radius:3vmin;padding:1.2vmin 2.2vmin;cursor:pointer}
+#pn{display:none;position:fixed;left:50%;bottom:calc(2vmin + 60px);transform:translateX(-50%);z-index:20;width:min(92vw,460px);background:rgba(10,39,72,.96);color:#fff;border:2px solid rgba(255,255,255,.6);border-radius:16px;padding:14px;font:700 16px/1.3 -apple-system,Arial,"PingFang TC",sans-serif;max-height:calc(100vh - 80px);overflow:auto}
+#pn b{display:block;margin-bottom:8px;font-size:18px}
+#pn label{display:block;margin-bottom:8px;font-size:14px;opacity:.9}
+#pn input{display:block;background:#fff;width:100%;margin-top:4px;padding:10px;border-radius:10px;border:0;font:500 16px/1.2 -apple-system,Arial,"PingFang TC",sans-serif;color:#0a2748}
+#pn .r{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+#pn .r button{flex:1;min-width:30%;font:700 15px/1 -apple-system,Arial,"PingFang TC",sans-serif;padding:11px 8px;border-radius:10px;border:2px solid rgba(255,255,255,.6);background:transparent;color:#fff;cursor:pointer}
+#pn .r button.p{background:#ffd23f;color:#0a2748;border-color:#ffd23f}
+#pn small.hp{display:block;margin:0 0 8px;color:#cfe3ff;font-size:12.5px;font-weight:500;line-height:1.4}
+#pn .tg{display:flex;align-items:center;margin-bottom:4px;font-size:15px;opacity:1}
+#pn .tg input{display:inline-block;width:20px;height:20px;margin:0 8px 0 0;padding:0}
+#pn small{display:block;margin-top:8px;min-height:1em;color:#ffd23f}
+.ic{display:none;position:absolute;left:2vw;top:min(10vmin,14vw);width:min(24vmin,32vw);font-size:min(22vmin,30vw);line-height:1;z-index:2;transform-origin:left center;animation:wv 1.3s ease-in-out infinite alternate;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+@keyframes wv{to{transform:skewY(-4deg) scaleX(.96) rotate(2deg)}}
+.rb{animation:drf 4s ease-in-out infinite alternate}.rb.r2{animation-duration:5s;animation-direction:alternate-reverse}.rb.r3{animation-duration:6s}.rb.r4{animation-duration:3.5s;animation-direction:alternate-reverse}
+@keyframes drf{to{transform:translateX(50px) translateY(10px)}}
+</style>
+</head>
+<body data-lang="zh">
+<div id="sky">
+<svg class="bg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a8ad8"/><stop offset="1" stop-color="#0d4f93"/></linearGradient>
+      <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2c9c8a"/><stop offset=".5" stop-color="#4cc3ab"/><stop offset="1" stop-color="#23806f"/></linearGradient>
+    </defs>
+    <g class="cloud" fill="#fff" opacity=".92"><ellipse cx="520" cy="200" rx="100" ry="26"/><ellipse cx="590" cy="180" rx="64" ry="24"/><ellipse cx="900" cy="300" rx="85" ry="22"/><ellipse cx="300" cy="260" rx="70" ry="18"/></g>
+    <rect x="0" y="640" width="1200" height="160" fill="url(#sea)"/>
+    <g fill="none" stroke-linecap="round">
+      <path class="rb r3" d="M-150 500 C 200 340, 420 640, 720 450 S 1100 290, 1350 340" stroke="#3aa6b9" stroke-width="34"/>
+      <path class="rb r1" d="M-150 570 C 200 420, 400 710, 700 520 S 1100 360, 1350 420" stroke="#f55a00" stroke-width="52"/>
+      <path class="rb r2" d="M-150 640 C 250 500, 450 770, 760 590 S 1150 450, 1350 500" stroke="#ffd23f" stroke-width="38"/>
+      <path class="rb r4" d="M-150 720 C 300 600, 520 810, 820 690 S 1150 580, 1350 620" stroke="#fff" stroke-opacity=".75" stroke-width="20"/>
+    </g>
+    <g id="t101"></g>
+  </svg>
+</div>
+<div class="ic" id="ic"></div>
+<svg id="route" style="position:fixed;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;display:none"><path id="rp" fill="none" stroke="#fff" stroke-opacity=".85" stroke-linecap="round"/></svg>
+<div class="plane free"><svg viewBox="0 0 124 44" style="width:100%;height:auto;display:block;overflow:visible"><g stroke="#0a2748" stroke-width="2.2" stroke-linejoin="round"><path d="M50 22 L34 40 L52 40 L82 22Z" fill="#1565c0"/><path d="M8 20Q8 13 22 13L94 13Q114 15 119 21Q114 27 94 28L22 28Q8 28 8 20Z" fill="#fff"/><path d="M10 15L3 2L22 2L32 14Z" fill="#ffd23f"/><path d="M60 14L46 2L62 2L76 14Z" fill="#1565c0"/></g><g fill="#58aef5"><circle cx="30" cy="20" r="2.4"/><circle cx="42" cy="20" r="2.4"/><circle cx="54" cy="20" r="2.4"/><circle cx="66" cy="20" r="2.4"/><path d="M92 16.5Q104 17 110 21L92 21Z"/></g></svg></div>
+<div class="main">
+  <div class="bc zh"><svg class="bcs" viewBox="0 0 160 100"><rect width="160" height="100" fill="#fff"/><rect width="160" height="50" fill="#1c3f94"/><path d="M0 0 L160 50 M160 0 L0 50" stroke="#fff" stroke-width="9"/><path d="M0 0 L160 50 M160 0 L0 50" stroke="#d8202a" stroke-width="3"/><rect x="0" y="19" width="160" height="12" fill="#fff"/><rect x="74" y="0" width="12" height="50" fill="#fff"/><rect x="0" y="22" width="160" height="6" fill="#d8202a"/><rect x="77" y="0" width="6" height="50" fill="#d8202a"/><path d="M0 62 Q20 56 40 62 T80 62 T120 62 T160 62 V74 Q140 68 120 74 T80 74 T40 74 T0 74Z" fill="#1c5fd0"/><path d="M0 80 Q20 74 40 80 T80 80 T120 80 T160 80 V92 Q140 86 120 92 T80 92 T40 92 T0 92Z" fill="#1c5fd0"/><path d="M52 100 A28 28 0 0 1 108 100Z" fill="#f5c518"/></svg><span>BC 翻盤了</span><i class="dt">10/24</i></div>
+  <div class="bc en"><svg class="bcs" viewBox="0 0 160 100"><rect width="160" height="100" fill="#fff"/><rect width="160" height="50" fill="#1c3f94"/><path d="M0 0 L160 50 M160 0 L0 50" stroke="#fff" stroke-width="9"/><path d="M0 0 L160 50 M160 0 L0 50" stroke="#d8202a" stroke-width="3"/><rect x="0" y="19" width="160" height="12" fill="#fff"/><rect x="74" y="0" width="12" height="50" fill="#fff"/><rect x="0" y="22" width="160" height="6" fill="#d8202a"/><rect x="77" y="0" width="6" height="50" fill="#d8202a"/><path d="M0 62 Q20 56 40 62 T80 62 T120 62 T160 62 V74 Q140 68 120 74 T80 74 T40 74 T0 74Z" fill="#1c5fd0"/><path d="M0 80 Q20 74 40 80 T80 80 T120 80 T160 80 V92 Q140 86 120 92 T80 92 T40 92 T0 92Z" fill="#1c5fd0"/><path d="M52 100 A28 28 0 0 1 108 100Z" fill="#f5c518"/></svg><span>BC FLIPPED</span><i class="dt">10/24</i></div>
+  <div class="panel">
+    <i class="date">11/28</i>
+    <div class="l1"><span class="zh" style="font-family:'Noto Sans TC','PingFang TC',sans-serif;font-weight:900">台北</span><span class="en" style="font-family:Anton,Impact,sans-serif;font-weight:400">TAIPEI</span><span class="vt"><b class="num3" style="font-family:Anton,Impact,sans-serif;font-weight:400">3</b><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45"/></svg></span></div>
+    <div class="l2"><span class="zh" style="font-family:'Noto Sans TC','PingFang TC',sans-serif;font-weight:900">換你翻!</span><span class="en" style="font-family:Anton,Impact,sans-serif;font-weight:400">FLIPS!</span></div>
+  </div>
+</div>
+<div class="ctl" id="ctl"><button data-l="zh" class="on">中文</button><button data-l="en">EN</button><button id="ed" aria-label="編輯">✎</button></div>
+<div id="pn"><b>編輯文字</b><small class="hp">主標空白＝用預設。改了小標、主標或圖示，就不會再顯示中英文切換。</small><label>主標第一行（最多5字，空白＝預設）<input id="in1" placeholder="例如：台北"></label><label>主標第二行（最多5字，空白＝預設）<input id="in2" placeholder="例如：順順投"></label><label>小標（最多8字）<input id="inT" placeholder="例如：從東京回來"></label><label>貼紙（選填，最多5字，貼在小標旁）<input id="inD" placeholder="例如：首投"></label><label>圖示（選填，貼一個表情符號，例如 🇯🇵）<input id="inI" maxlength="8" placeholder="例如：🇯🇵 🌏 🚄"></label><small class="hp">填了圖示，左上角會顯示它。不填就不顯示圖示。</small><label class="tg"><input type="checkbox" id="inP">顯示飛機與航線</label><small class="hp">飛機從圖示（沒有圖示就從畫面左邊）沿虛線飛向台北 101，表示飛回來投票。預設版開、自訂版關，可自己切換。</small><label>分享連結<input id="ln" readonly></label><div class="r"><button id="cp">複製／分享連結</button><button id="rst">恢復預設</button><button id="done" class="p">完成</button></div><small id="msg"></small></div>
+<button id="fs" type="button">⛶</button>
+<script>
+(function(){
+  var g='',x=1085,top=166,segH=58;
+  for(var i=0;i<8;i++){var yb=630-i*segH,yt=yb-segH,wb=40,wt=54;
+    g+='<path d="M'+(x-wb/2)+' '+yb+' L'+(x-wt/2)+' '+yt+' L'+(x+wt/2)+' '+yt+' L'+(x+wb/2)+' '+yb+'Z" fill="url(#glass)" stroke="#1c6b5c" stroke-width="2"/>';}
+  g+='<rect x="'+(x-22)+'" y="'+(top-22)+'" width="44" height="22" fill="#2a9a84" stroke="#1c6b5c" stroke-width="2"/>';
+  g+='<rect x="'+(x-14)+'" y="'+(top-48)+'" width="28" height="26" fill="#2a9a84" stroke="#1c6b5c" stroke-width="2"/>';
+  g+='<rect x="'+(x-6)+'" y="'+(top-70)+'" width="12" height="22" fill="#2a9a84"/>';
+  g+='<rect x="'+(x-2)+'" y="'+(top-100)+'" width="4" height="30" fill="#556"/>';
+  g+='<rect x="'+(x-34)+'" y="620" width="68" height="20" fill="#2a9a84"/>';
+  document.getElementById('t101').innerHTML=g;
+
+  var body=document.body,btns=document.querySelectorAll('.ctl button[data-l]'),bg=document.querySelector('#sky svg.bg');
+  function lang(l){body.setAttribute('data-lang',l);if(typeof fitText==='function')setTimeout(fitText,0);document.documentElement.lang=l==='en'?'en':'zh-Hant';
+    for(var i=0;i<btns.length;i++)btns[i].classList.toggle('on',btns[i].getAttribute('data-l')===l);
+    try{localStorage.setItem('lang',l)}catch(e){}}
+  for(var i=0;i<btns.length;i++)btns[i].addEventListener('click',function(){lang(this.getAttribute('data-l'))});
+  var l0='zh';try{l0=localStorage.getItem('lang')||'zh'}catch(e){}
+  if(/en/i.test(location.hash))l0='en';if(/zh/i.test(location.hash))l0='zh';
+  lang(l0);
+  var CAF='<svg class="caf" viewBox="0 0 200 100" style="width:100%;height:auto;display:block;border:2px solid #d7dde5;box-shadow:0 .8vmin 0 rgba(0,0,0,.2)"><rect width="200" height="100" fill="#fff"/><rect width="50" height="100" fill="#d8202a"/><rect x="150" width="50" height="100" fill="#d8202a"/><polygon points="100.0,10.0 107.6,26.0 115.2,22.0 113.3,38.0 126.6,32.0 123.6,40.0 132.3,46.0 119.0,58.0 120.9,64.0 103.8,61.2 103.8,84.0 96.2,84.0 96.2,61.2 79.1,64.0 81.0,58.0 67.7,46.0 76.4,40.0 73.4,32.0 86.7,38.0 84.8,22.0 92.4,26.0" fill="#d8202a"/></svg>';
+  var bcs=[].map.call(document.querySelectorAll('.bc'),function(b){var sp=b.querySelector('span'),f=b.querySelector('.bcs'),d=b.querySelector('.dt');return{b:b,sp:sp,f:f,d:d,t0:sp.textContent,d0:d.textContent}});
+  var mains=[].map.call(document.querySelectorAll('.l1>span.zh,.l1>span.en,.l2>span.zh,.l2>span.en'),function(sp){return{sp:sp,line:sp.parentNode.classList.contains('l1')?1:2,t0:sp.textContent,st0:sp.getAttribute('style')}});
+  var ctlb=document.querySelectorAll('.ctl button[data-l]'),rootS=document.documentElement.style;
+  function isAscii(t){return /^[\x20-\x7e]+$/.test(t)}
+  function custom(c){return !!(c.tag||c.m1||c.m2||c.ic)}
+  function apply(c){
+    bcs.forEach(function(o){
+      if(c.tag){o.b.style.removeProperty('display');o.sp.textContent=c.tag;if(o.f)o.f.style.display='none';if(c.d){o.d.textContent=c.d;o.d.style.display=''}else{o.d.style.display='none'}}
+      else if(c.m1||c.m2||c.ic){o.b.style.setProperty('display','none','important')}
+      else{o.b.style.removeProperty('display');o.sp.textContent=o.t0;if(o.f)o.f.style.display='';o.d.textContent=o.d0;o.d.style.display=''}});
+    mains.forEach(function(o){var t=o.line===1?c.m1:c.m2;
+      if(t){o.sp.textContent=t;o.sp.setAttribute('style',isAscii(t)?"font-family:Anton,Impact,sans-serif;font-weight:400":"font-family:'Noto Sans TC','PingFang TC',sans-serif;font-weight:900")}
+      else{o.sp.textContent=o.t0;o.sp.setAttribute('style',o.st0)}});
+    for(var i=0;i<ctlb.length;i++)ctlb[i].style.display=custom(c)?'none':'';
+    var cu=custom(c);
+    var ice=document.getElementById('ic');if(c.ic){ice.textContent=c.ic}else if(!cu){ice.innerHTML=CAF}else{ice.textContent=''}ice.style.display=(c.ic||!cu)?'block':'none';
+    fitText()}
+  function fitText(){rootS.removeProperty('--fs');
+    var cu=(typeof cfg!=='undefined')&&custom(cfg),l1=document.querySelector('.l1'),l2=document.querySelector('.l2'),pnl=document.querySelector('.panel'),fs=parseFloat(getComputedStyle(l1).fontSize);
+    var w=Math.max(l1.scrollWidth,l2.scrollWidth,1),kw=(innerWidth*.94)/(w+fs*.44);
+    var banner=document.querySelector('.bc:not([style*="display: none"])'),vis=cu&&!(cfg.tag)?false:true;
+    var kh=(innerHeight*(vis?.6:.8))/Math.max(pnl.offsetHeight,1);
+    var k=Math.min(kw,cu?Math.min(kh,1.7):1);if(!cu)k=Math.min(1,kw);
+    if(Math.abs(k-1)>.01)rootS.setProperty('--fs',(fs*k)+'px');
+    var mn=document.querySelector('.main'),nob=cu&&!cfg.tag;
+    if(nob){var f2=parseFloat(getComputedStyle(l1).fontSize),ph=pnl.offsetHeight;mn.style.justifyContent='flex-start';mn.style.paddingTop=Math.max(f2*.3,(innerHeight-ph)/2-f2*.22)+'px'}
+    else{mn.style.justifyContent='';mn.style.paddingTop=''}}
+  function parseQ(){var q={};location.search.replace(/^\?/,'').split('&').forEach(function(p){if(!p)return;var a=p.split('=');try{q[a[0]]=decodeURIComponent((a[1]||'').replace(/\+/g,' '))}catch(e){}});return q}
+  function lim(t,n){var o='',w=0;Array.from(String(t||'')).forEach(function(ch){var c=/[\x20-\x7e]/.test(ch)?.6:1;if(w+c<=n+.001){o+=ch;w+=c}});return o}
+  function clean(o){return{tag:lim(o.tag,8),d:lim(o.d,5),m1:lim(o.m1,5),m2:lim(o.m2,5),ic:Array.from(String(o.ic||'')).slice(0,3).join(''),pl:(o.pl==='1'||o.pl==='0')?o.pl:''}}
+  function plOn(c){return c.pl?c.pl==='1':!custom(c)}
+  var q=parseQ(),cfg=clean({});
+  if(q.tag||q.m1||q.m2||q.ic||q.pl){cfg=clean(q)}
+  else{try{var sv=JSON.parse(localStorage.getItem('cfg')||'null');if(sv)cfg=clean(sv)}catch(e){}}
+  apply(cfg);
+  function save(){try{if(custom(cfg)||cfg.pl)localStorage.setItem('cfg',JSON.stringify(cfg));else localStorage.removeItem('cfg')}catch(e){}}
+  function link(){var u=location.origin+location.pathname,p=[];
+    ['tag','d','m1','m2','ic','pl'].forEach(function(k){if(cfg[k])p.push(k+'='+encodeURIComponent(cfg[k]))});
+    return u+(p.length?'?'+p.join('&'):'')+(!custom(cfg)&&body.getAttribute('data-lang')==='en'?'#en':'')}
+  var pn=document.getElementById('pn'),inT=document.getElementById('inT'),inD=document.getElementById('inD'),in1=document.getElementById('in1'),in2=document.getElementById('in2'),inI=document.getElementById('inI'),inP=document.getElementById('inP'),ln=document.getElementById('ln'),msg=document.getElementById('msg');
+  function refresh(){ln.value=link()}
+  function openP(){inT.value=cfg.tag;inD.value=cfg.d;in1.value=cfg.m1;in2.value=cfg.m2;inI.value=cfg.ic;inP.checked=plOn(cfg);refresh();msg.textContent='';pn.style.display='block'}
+  function closeP(){pn.style.display='none';try{history.replaceState(null,'',link())}catch(e){}}
+  function onIn(){cfg=clean({tag:inT.value.trim(),d:inD.value.trim(),m1:in1.value.trim(),m2:in2.value.trim(),ic:inI.value.trim(),pl:cfg.pl});inP.checked=plOn(cfg);if(inT.value!==cfg.tag&&inT.value.trim()!==cfg.tag)inT.value=cfg.tag;if(inD.value.trim()!==cfg.d)inD.value=cfg.d;if(in1.value.trim()!==cfg.m1)in1.value=cfg.m1;if(in2.value.trim()!==cfg.m2)in2.value=cfg.m2;apply(cfg);save();refresh()}
+  inT.addEventListener('input',onIn);inD.addEventListener('input',onIn);in1.addEventListener('input',onIn);in2.addEventListener('input',onIn);inI.addEventListener('input',onIn);inP.addEventListener('change',function(){cfg.pl=inP.checked?'1':'0';apply(cfg);save();refresh()});
+  document.getElementById('ed').addEventListener('click',openP);
+  document.getElementById('done').addEventListener('click',closeP);
+  document.getElementById('rst').addEventListener('click',function(){cfg=clean({});inT.value='';inD.value='';in1.value='';in2.value='';inI.value='';inP.checked=plOn(cfg);apply(cfg);save();refresh();msg.textContent='已恢復預設'});
+  document.getElementById('cp').addEventListener('click',function(){var u=link();
+    if(navigator.share){navigator.share({title:'台北換你翻',url:u}).catch(function(){})}
+    else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(function(){msg.textContent='已複製連結'},function(){ln.select();msg.textContent='請長按選取後複製'})}
+    else{ln.select();msg.textContent='請長按選取後複製'}});
+  ln.addEventListener('focus',function(){ln.select()});
+  for(var i2=0;i2<btns.length;i2++)btns[i2].addEventListener('click',function(){if(pn.style.display==='block')refresh()});
+  function fit(){bg.setAttribute('preserveAspectRatio',innerHeight>innerWidth?'xMaxYMax slice':'xMidYMax slice');
+    var vh=document.getElementById('sky').clientHeight||innerHeight,sc=Math.max(innerWidth/1200,vh/800),topv=800-vh/sc,k=Math.max(.4,Math.min(1,(640-Math.max(topv,0)-40)/(640-66)));
+    document.getElementById('t101').setAttribute('transform','translate(1085 640) scale('+k+') translate(-1085 -640)')}
+  addEventListener('resize',function(){fit();fitText()});fit();
+
+
+  var routeOn=false,rp=document.getElementById('rp'),rsvg=document.getElementById('route'),plane=document.querySelector('.plane'),pathLen=0,t0=0;
+  function fitIcon(){var ice=document.getElementById('ic');ice.style.width='';ice.style.fontSize='';ice.style.top='';
+    if(ice.style.display!=='block')return;
+    var bc=[].slice.call(document.querySelectorAll('.bc')).filter(function(e){return getComputedStyle(e).display!=='none'&&e.style.visibility!=='hidden'})[0];if(!bc)return;
+    var f=ice.getBoundingClientRect(),r=bc.getBoundingClientRect();
+    function ov(a,b){return a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top}
+    if(!ov(f,r))return;
+    var w=Math.max(56,r.left-f.left-10);ice.style.width=w+'px';ice.style.fontSize=(w*.9)+'px';
+    f=ice.getBoundingClientRect();
+    if(ov(f,r)){var t=r.top-f.height-6;ice.style.top=Math.max(4,t)+'px';f=ice.getBoundingClientRect();
+      if(ov(f,r)){var h=Math.max(40,r.top-10);ice.style.width=(h*1.9)+'px';ice.style.fontSize=(h*.9)+'px';ice.style.top='4px'}}}
+  function layoutRoute(){
+    fitIcon();
+    var ice=document.getElementById('ic'),hasIc=ice&&ice.style.display==='block',on=(typeof cfg!=='undefined')&&plOn(cfg);
+    routeOn=!!on;rsvg.style.display=on?'block':'none';plane.classList.remove('free');plane.style.display=on?'':'none';
+    if(!on){plane.style.transform='';return}
+    var f=hasIc?ice.getBoundingClientRect():{left:-30,right:-30,top:Math.min(innerHeight*.1,90),height:0},t=document.getElementById('t101').getBoundingClientRect(),W=innerWidth,H=innerHeight;
+    var x1=hasIc?f.right+4:-20,y1=f.top+f.height*.4,x2=(t.left+t.right)/2,y2=t.top+6,top=Math.max(8,Math.min(y1,y2)-H*.07);
+    rp.setAttribute('d','M'+x1+' '+y1+' C '+(x1+(x2-x1)*.2)+' '+top+', '+(x1+(x2-x1)*.8)+' '+top+', '+x2+' '+y2);
+    var sw=Math.max(3,Math.min(W,H)*.007);rp.setAttribute('stroke-width',sw);rp.setAttribute('stroke-dasharray',(sw*1.2)+' '+(sw*3));
+    pathLen=rp.getTotalLength()}
+  function tick(ts){
+    if(routeOn&&pathLen){
+      var D=4200,P=700,e=(ts-t0)%(D+P),u=Math.min(1,e/D);u=u*u*(3-2*u);
+      var L=u*pathLen,p=rp.getPointAtLength(L),p2=rp.getPointAtLength(Math.min(pathLen,L+2)),ang=Math.atan2(p2.y-p.y,p2.x-p.x)*180/Math.PI,w=plane.offsetWidth,h=plane.offsetHeight;
+      plane.style.transform='translate('+(p.x-w/2)+'px,'+(p.y-h/2)+'px) rotate('+ang+'deg)';
+      plane.style.opacity=e>D?0:1}
+    requestAnimationFrame(tick)}
+  var _apply=apply;apply=function(c){_apply(c);layoutRoute()};
+  addEventListener('resize',function(){setTimeout(layoutRoute,50)});
+  setTimeout(function(){layoutRoute();requestAnimationFrame(function(ts){t0=ts;tick(ts)})},100);
+  var fs=document.getElementById('fs'),ctl=document.getElementById('ctl'),de=document.documentElement,rq=de.requestFullscreen||de.webkitRequestFullscreen;
+  function isFs(){return document.fullscreenElement||document.webkitFullscreenElement}
+  function st(){var f=!!isFs();fs.style.display=f?'none':'block';ctl.style.display=f?'none':'flex';if(f)pn.style.display='none'}
+  if(!rq){fs.style.display='none'}else{
+    fs.addEventListener('click',function(){try{rq.call(de)}catch(e){}});
+    document.addEventListener('fullscreenchange',st);document.addEventListener('webkitfullscreenchange',st);
+  }
+})();
+</script>
+</body>
+</html>
